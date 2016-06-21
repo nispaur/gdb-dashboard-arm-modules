@@ -1,0 +1,55 @@
+# Useful and OpenOCD reset macros for at91sam7x256 board
+
+# Infos sur le PIO/SPI
+define pioa
+    p/t *(AT91PS_PIO)0xFFFFF400
+end
+document pioa
+Print current status of PIOA
+end
+
+define piob
+    p/t *(AT91PS_PIO)0xFFFFF400
+end
+document piob
+Print current status of the PIOB
+end
+
+define spi
+    p/t *(AT91PS_SPI)0xFFFE0000
+end
+document spi
+Print current status of the SPI0
+end
+
+define aic
+    p/t *(AT91PS_AIC)     0xFFFFF000
+end
+document pioa
+Print current status of the advanced interrupt controller
+end
+
+define pmc
+    p/t *(AT91PS_PMC)     0xFFFFFC00
+end
+document pioa
+Print current status of the PMC
+end
+
+define reset
+    target extended-remote localhost:3333
+    monitor reset
+    monitor arm core_state arm
+    monitor soft_reset_halt
+    monitor halt
+    exec main.elf
+    load
+end
+document reset
+Resets the ARM core and loads executable in SRAM
+end
+
+# vim: filetype=gdb
+# Local Variables:
+# mode: gdb
+# End:

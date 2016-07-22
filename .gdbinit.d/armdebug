@@ -36,13 +36,27 @@ document pioa
 Print current status of the PMC
 end
 
+define connect
+    if $argc == 0
+	target extended-remote localhost:3333
+    end
+    if $argc == 1
+	target extended-remote $arg0:3333
+    end
+    if $argc == 2
+	target extended-remote $arg0:$arg1
+    end
+end
+document connect
+Connects to OpenOCD's gdbserver target. Defaults to localhost:3333
+Usage: connect [host] [port]
+end
+
 define reset
-    target extended-remote localhost:3333
     monitor reset
     monitor arm core_state arm
     monitor soft_reset_halt
     monitor halt
-    exec main.elf
     load
 end
 document reset
